@@ -62,6 +62,40 @@ char* compressString(char* str, int length){
     return res;
 }
 
+int* uniqueElements(int* arr, int length){
+    /* int max=arr[0];
+    for(int i=0;i<length;i++){
+        if(arr[i]>max)
+            max = arr[i];
+    } */
+    int* temp = (int*)calloc(length, sizeof(int));
+    int j = 0;
+    int flag = 1;
+    
+    for(int i=0;i<length;i++){
+        j = 0;
+        flag = 1;
+        while(temp[j]!=0){
+            if(temp[j]==arr[i]){
+                flag = 0;
+                break;
+            }
+            j++;
+        }
+        if(flag==1){
+            temp[ind] = arr[i];
+            ind++;
+        }
+    }
+    j = 0;
+    int* res = (int*)malloc(sizeof(int)*ind);
+    while(temp[j]!=0){
+        res[j] = temp[j];
+        j++;
+    }
+    return res;
+}
+
 int** transpose(int** matrix, int NumRow, int NumCol){
     int** res = (int**)malloc(sizeof(int*)*NumCol);
     for(int i=0;i<NumCol;i++){

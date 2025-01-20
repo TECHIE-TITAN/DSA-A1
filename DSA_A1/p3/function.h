@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #define MAX 10000
+int ind = 0;
 
 void reverseString(char* str, int length);
 char* compressString(char* str, int length);

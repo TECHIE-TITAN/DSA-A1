@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 void swap(int* a, int* b){
     int temp = *a;
@@ -63,11 +64,11 @@ int main(){
 
     int left = 0;
     int right = n-1;
-    int min = target - (arr[right] + arr[left]);
-    int n1, n2;
+    int min = abs(target - (arr[right] + arr[left]));
+    int n1 = arr[left], n2 = arr[right];
     while(right>left){
-        if(min>=(target - (arr[right] + arr[left]))){
-            min = (target - (arr[right] + arr[left]));
+        if(min>=abs(target - (arr[right] + arr[left]))){
+            min = abs(target - (arr[right] + arr[left]));
             n1 = arr[left];
             n2 = arr[right];
         }

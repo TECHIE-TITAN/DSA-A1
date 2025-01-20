@@ -28,17 +28,27 @@ node* Insert(node* head, int num){
 }
 
 node* Find(node* head, int num){
+    
+    // If the list is empty
+    if(head==NULL)
+        return head;
     node* temp = head;
+    // Traverse to the element, if not found return
     while(temp->ele!=num){
         temp = temp->next;
         if(temp==head)
             return head;
     }
 
-    if(temp->next==head){
+    if(temp==head){             // If the element is at first pos
+        return head;
+    }
+    else if(temp->next==head){  // If the element is at last pos
+        head = temp;
         return head;
     }
 
+    // If the element is at any other general pos
     temp->next->prev = temp->prev;
     temp->prev->next = temp->next;
     temp->next = NULL;
@@ -55,11 +65,14 @@ node* Find(node* head, int num){
 }
 
 void Print(node* head){
+    if(head==NULL)
+        return;
     node* temp = head;
     do
     {
         printf("%d ", temp->ele);
         temp = temp->next;
     } while (temp!=head);
+        printf("\n");
     return;
 }

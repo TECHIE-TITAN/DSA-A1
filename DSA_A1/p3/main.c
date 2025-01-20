@@ -21,17 +21,17 @@ int main(){
             scanf("%s", str);
             printf("%s\n", compressString(str, len));
         }
-        /* else if(query[4]=='3'){
+        else if(query[4]=='3'){
             scanf("%d", &len);
             int* arr = (int*)malloc(sizeof(int)*len);
             for(int i=0;i<len;i++){
                 scanf("%d", &arr[i]);
             }
-            uniqueElements(arr, len);
-            for(int i=0;i<len;i++){
-                printf("%d ", arr[i]);
+            int* res = uniqueElements(arr, len);
+            for(int i=0;i<ind;i++){
+                printf("%d ", res[i]);
             }
-        } */
+        }
         else if(query[4]=='4'){
             int row, col;
             scanf("%d %d", &row, &col);
