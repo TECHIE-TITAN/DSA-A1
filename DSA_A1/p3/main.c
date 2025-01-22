@@ -19,7 +19,10 @@ int main(){
             scanf("%d", &len);
             char* str = (char*)malloc(sizeof(char)*(len+1));
             scanf("%s", str);
-            printf("%s\n", compressString(str, len));
+            char* res = compressString(str, len);
+            printf("%s\n", res);
+            free(res);
+            free(str);
         }
         else if(query[4]=='3'){
             scanf("%d", &len);
@@ -31,6 +34,9 @@ int main(){
             for(int i=0;i<ind;i++){
                 printf("%d ", res[i]);
             }
+            printf("\n");
+            free(arr);
+            free(res);
         }
         else if(query[4]=='4'){
             int row, col;
@@ -49,6 +55,10 @@ int main(){
                 }
                 printf("\n");
             }
+            for(int i=0;i<row;i++){
+                free(arr[i]);
+            }
+            free(arr);
         }
     }
 

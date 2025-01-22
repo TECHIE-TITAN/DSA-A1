@@ -14,60 +14,67 @@ void reverseString(char* str, int length){
     return;
 }
 
+// Removed many realloc usage to tackle RTE(aborted)
 char* compressString(char* str, int length){
+
     char ch = str[0];
-    char* res = (char*)malloc(sizeof(char));
-    int reslen = 0;
     int count = 1;
-    char* num = (char*)malloc(sizeof(char)*20);
-    for(int i=1; i<length; i++){
+
+    char* res = (char*)malloc(sizeof(char)*(2*length + 1));
+    int reslen = 0;
+    
+    char* num = (char*)malloc(sizeof(char)*(6));
+    int num_count = 0;
+
+    int i = 0;
+    for(i = 1; i<length; i++){
         if(str[i]==ch){
             count++;
         }
         else{
-            /* printf("%d", count);
-            printf("%c", ch);*/
-            res = (char*)realloc(res, sizeof(reslen+1));
             res[reslen++] = ch;
             if(count>9){
-                sprintf(num, "%d", count);
-                //printf("%s\n", num);
-                for(int j=0;j<strlen(num);j++){
-                    res = (char*)realloc(res, sizeof(reslen+1));
+                num_count = 0;
+                while(count!=0){
+                    num[num_count++] = (char)((count%10)+48);
+                    count = count/10;
+                }
+                num[num_count] = '\0';
+                reverseString(num, num_count);
+                for(int j=0;j<num_count;j++){
                     res[reslen++] = num[j];
                 }
             }
             else{
-                res = (char*)realloc(res, sizeof(reslen+1));
                 res[reslen++] = (char)(count+48);
             }
             ch = str[i];
             count = 1;
         }
     }
-    res = (char*)realloc(res, sizeof(reslen+1));
     res[reslen++] = ch;
     if(count>9){
-        sprintf(num, "%d", count);
-        for(int j=0;j<strlen(num);j++){
-            res = (char*)realloc(res, sizeof(reslen+1));
+        num_count = 0;
+        while(count!=0){
+            num[num_count++] = (char)((count%10)+48);
+            count = count/10;
+        }
+        num[num_count] = '\0';
+        reverseString(num, num_count);
+
+        for(int j=0;j<num_count;j++){
             res[reslen++] = num[j];
         }
     }
     else{
-        res = (char*)realloc(res, sizeof(reslen+1));
         res[reslen++] = (char)(count+48);
     }
-    //printf("%s\n", res);
+    res[reslen] = '\0';
+    free(num);
     return res;
 }
 
-int* uniqueElements(int* arr, int length){
-    /* int max=arr[0];
-    for(int i=0;i<length;i++){
-        if(arr[i]>max)
-            max = arr[i];
-    } */
+/* int* uniqueElements(int* arr, int length){
     int* temp = (int*)calloc(length, sizeof(int));
     int j = 0;
     int flag = 1;
@@ -93,6 +100,47 @@ int* uniqueElements(int* arr, int length){
         res[j] = temp[j];
         j++;
     }
+    free(temp);
+    return res;
+} */
+
+int* uniqueElements(int* arr, int length){
+    int max = arr[0];
+    for(int i=0;i<length;i++){
+        if(arr[i]>max)
+            max = arr[i];
+    }
+/*     int* temp = (int*)calloc(max+1, sizeof(int)); */
+    int* temp = (int*)malloc((max+1)*sizeof(int));
+    for(int i=0;i<max+1;i++){
+        temp[i] = 0;
+    }
+
+    ind = 0;
+    for(int i=0;i<length;i++){
+        if(temp[arr[i]]==0){
+            ind++;
+            temp[arr[i]] = 1;
+        }
+    }
+
+    /* for(int i = 0; i < length; i++) {
+        if(temp[arr[i]]==1) {
+            ind++;
+        }
+    } */
+    //printf("%d\n", ind);
+    int* res = (int*)malloc(sizeof(int)*ind);
+    int j = 0;
+
+    for(int i=0; i<length; i++){
+        if(temp[arr[i]]==1){
+            res[j] = arr[i];
+            j++;
+            temp[arr[i]] = 0;
+        }
+    }
+    free(temp);
     return res;
 }
 
