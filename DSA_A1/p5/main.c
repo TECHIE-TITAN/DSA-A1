@@ -1,24 +1,45 @@
 #include "function.c"
 
 int main(){
-    row_node* head = NULL;
-    row_node* temp_row_node = NULL;
-    col_node* temp_col_node = NULL;
+    
     char* query = (char*)malloc(sizeof(char)*4);
     scanf("%s", query);
 
-    if(strcmp(query, "TRA")==0){
-        int m, n, k, row, col, val;
+    if(query[0]=='T'){
+        row_node* head = NULL;
+        int n, m, k;
         scanf("%d %d %d", &n, &m, &k);
+        int row, col, val;
         for(int i=0;i<k;i++){
             scanf("%d %d %d", &row, &col, &val);
-            if(checkrow(head, row)==0){
-                temp_row_node = create_row_node(row);
-                head = insert_row(head, temp_row_node);
-            }
-            temp_col_node = create_col_node(col, val);
-            head = insert_col(head, temp_col_node, row);
+            head = sparse_matrix(head, row, col, val);
         }
-        
+        row_node* res = transpose(head);
+        printf("%d\n", k);
+        print(res);
+        free(head);
+        free(res);
+    }
+    else if(query[0]=='A'){
+        row_node* num1 = NULL;
+        row_node* num2 = NULL;
+        int n, m, k1, k2;
+        scanf("%d %d %d %d", &n, &m, &k1, &k2);
+        int row, col, val;
+        for(int i=0;i<k1;i++){
+            scanf("%d %d %d", &row, &col, &val);
+            num1 = sparse_matrix(num1, row, col, val);
+        }
+        for(int i=0;i<k2;i++){
+            scanf("%d %d %d", &row, &col, &val);
+            num2 = sparse_matrix(num2, row, col, val);
+        }
+        int count = 0;
+        row_node* result = add_matrix(num1, num2, n, m, &count);
+        printf("%d\n", count);
+        print(result);
+        free(num1);
+        free(num2);
+        free(result);
     }
 }
